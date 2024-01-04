@@ -1,10 +1,10 @@
-const enviarEmail = {
+const bodyEnviarEmail = {
     "id": 1,
-    "email": "mari@gmail.com",
+    "email": "marianamassine@gmail.com",
     "assunto": "oi",
     "mensagem": "arriba"
 }
 
 module.exports = {
-    enviarEmail,
+    bodyEnviarEmail,
 }

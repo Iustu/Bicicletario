@@ -1,21 +1,22 @@
 'use strict'
 
 const emailSchema = require('./schemas/emailSchema');
-const emailService = require('../services/enviarEmailService');
-
-//Todo:
-//ver o que tem que fixar exposto ou nao
-//POST /enviarEmail -done
-//POST /cobranca
-//POST /processaCobrancasEmFila
-//POST /filaCobranca
-//GET /cobranca/{idCobranca}
-//POST /validaCartaoDeCredito
-
-
+const emailController = require('../controllers/enviarEmailController');
+const validaCartaoSchema = require('./schemas/validaCartaoSchema');
+const validaCartaoController = require('../controllers/validaCartaoController');
+const { cobrancaSchema, processaCobrancasSchema } = require('./schemas/cobrancasSchema');
+const cobrancasController = require('../controllers/cobrancasController');
 
 const routes = async (fastify) => {
-    fastify.post('/enviarEmail', emailSchema, emailService.enviarEmail)
-}
+    fastify.post('/enviarEmail', emailSchema, emailController.enviarEmail);
+    fastify.post('/cobranca', cobrancaSchema, cobrancasController.realizarCobranca);
+    fastify.post('/processaCobrancasEmFila', processaCobrancasSchema, cobrancasController.processarCobrancasEmFila);
+    fastify.post('/filaCobranca', cobrancaSchema, cobrancasController.incluirCobrancaNaFila);
+    fastify.get('/cobranca/:id',  cobrancasController.obterCobranca);
+    fastify.post('/validaCartaoDeCredito', validaCartaoSchema, validaCartaoController.validarCartao);
+};
 
 module.exports = routes;
+
+
+
